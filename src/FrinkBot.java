@@ -55,6 +55,7 @@ public class FrinkBot extends ConfigurablePircBot {
         bot.interp.parseString("2 in -> feet");
         bot.interp.setRestrictiveSecurity(true);
 
+        bot.setAutoNickChange(true);
         bot.initBot(args[0]);
     }
 }
