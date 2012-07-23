@@ -1,0 +1,6 @@
+<ivy-module version="2.2">
+    <info organisation="org.jibble" module="frinkbot"/>
+    <dependencies>
+        <dependency org="org.jibble" name="pircbot" rev="latest.integration" changing="true"/>
+    </dependencies>
+</ivy-module>

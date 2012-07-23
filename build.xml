@@ -1,0 +1,45 @@
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="frinkbot" default="jar">
+  <description>
+    Build FrinkBot
+  </description>
+
+  <property name="src.dir" location="src"/>
+  <property name="build.dir" location="build"/>
+  <property name="classes.dir" location="${build.dir}/classes"/>
+  <property name="artifacts.dir" location="${build.dir}/artifacts"/>
+  <property name="reports.dir" location="${build.dir}/reports"/>
+  <property name="ivy.lib.dir" location="${build.dir}/lib"/>
+
+  <path id="lib.path">
+    <fileset dir="${ivy.lib.dir}"/>
+  </path>
+
+  <target name="resolve" description="--> retrieve dependencies with ivy">
+    <ivy:retrieve/>
+    <get src="http://futureboy.us/frinkjar/frink.jar" dest="${ivy.lib.dir}"/>
+  </target>
+
+  <target name="report" depends="resolve" description="--> generate a report of dependencies">
+    <ivy:report todir="${reports.dir}"/>
+  </target>
+
+  <target name="build" depends="resolve" description="--> build FrinkBot">
+    <mkdir dir="${classes.dir}"/>
+    <javac fork="true" srcdir="${src.dir}" destdir="${classes.dir}" classpathref="lib.path">
+    </javac>
+  </target>
+
+  <target name="jar" depends="build" description="--> create frinkbot.jar">
+    <mkdir dir="${artifacts.dir}"/>
+    <jar jarfile="${artifacts.dir}/frinkbot.jar" basedir="${classes.dir}"/>
+  </target>
+
+  <target name="clean" description="--> delete the build directory">
+    <delete dir="${build.dir}"/>
+  </target>
+
+  <target name="clean-cache" description="--> clean the ivy cache">
+    <ivy:cleancache/>
+  </target>
+
+</project>
